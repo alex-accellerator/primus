@@ -44,28 +44,43 @@ nextday.setDate(today.getDate() + 1);
 var joinResult = "http://terminal2.expedia.com/hotels?" + "hotelids=" + hotelIds.join() + "&checkInDate=" + today.yyyymmdd() + "&checkOutDate=" +nextday.yyyymmdd()+ "&apikey=Rbc5P7hu4X96LXpe1n1vAnsP4Y7ENq8I";
 
 $.get(joinResult, function(hotelresult){
-	// console.log("hotelresult", hotelresult);
+	console.log("hotelresult", hotelresult);
 
 	var hotellist = hotelresult.HotelInfoList;
 	var hotelinfo = hotellist.HotelInfo;
 
-// console.log("hotelinfo", hotelinfo);
+console.log("hotelinfo", hotelinfo);
 	
 	var hotels = [];
+	var sample = hotelinfo[0];
+	var city;
+	if (sample && sample.Location && sample.Location.City) {
+		city = window.lastCity = gun.load('primus/city/' + sample.Location.City);
+		console.log("Our CITY key is", 'primus/city/' + sample.Location.City)
+	}
+
 	$(hotelinfo).each (function(index){
 		var aHotel = hotelinfo[index];
 		if(aHotel.Price) {
 		var hotel = {
 			hotelid: aHotel.HotelID,
+			city: aHotel.Location.City,
 			name: aHotel.Name,
-			latitude: aHotel.Location.GeoLocation.Latitude,
-			longitude: aHotel.Location.GeoLocation.Longitude,
+			lat: aHotel.Location.GeoLocation.Latitude,
+			lng: aHotel.Location.GeoLocation.Longitude,
 			totalprice: aHotel.Price.TotalRate.Value,
 			hotelicon: aHotel.ThumbnailUrl
 			
 		};
 		gun.load('primus/hotels/' + hotel.hotelid).blank(function(){
-			this.set(hotel).key('primus/hotels/' + hotel.hotelid);
+			this.set(hotel).key('primus/hotels/' + hotel.hotelid).get(function(point){
+				expedia.group(point);
+				if(city){
+					city.group(point);
+					console.log("adding point to the city group", point);
+				}
+			});
+
 			// console.log("saving", hotel, "to gun");
 		}).get(function(point){
 			// console.log("hotel ID now exists");
