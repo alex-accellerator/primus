@@ -1,7 +1,7 @@
 {
-	"name": "examples",
-	"main": "express.js",
-	"description": "Example gun apps"
+	"name": "primus",
+	"main": "server.js",
+	"description": "Launch 2015 SF"
 ,	"version": "0.0.1"
 ,	"engines": {
 		"node": "~>0.10.x"
