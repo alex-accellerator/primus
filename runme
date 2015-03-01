@@ -1,1 +1,1 @@
-node server.js 8000
+nodemon server.js 8000

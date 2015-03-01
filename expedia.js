@@ -2,26 +2,65 @@
 var gun = Gun(location.origin + '/gun');
 var expedia = gun.load('primus/expedia');
 
+var hotelIds = [];
 
-expedia.blank (function () {
+var searchString = "My wife and I want the cheapest hotel in San Francisco for this weekend";
+$.get("http://terminal2.expedia.com/nlp/results?q=" + encodeURI(searchString) + "&apikey=Rbc5P7hu4X96LXpe1n1vAnsP4Y7ENq8I", function(nlplist){
 
-	$.get("http://terminal2.expedia.com/suggestions/regions?query=las%20vegas&apikey=Rbc5P7hu4X96LXpe1n1vAnsP4Y7ENq8I",
-	function(arraylist){ 
+var hotels = nlplist.result.hotels;
 
-		arraylist.forEach(function(item, index){
 
-			var object = {
-				name: item.name,
-				id: item.id,
-				lat: item.position.coordinates[0],
-				long: item.position.coordinates[1]
-			};
-			expedia.group(object);
-			console.log('expedia API', object, index);
-		});
+$(hotels).each (function(index){
+	var aHotel = hotels[index];
+    hotelIds.push(aHotel.id);
+
+});
+//console.log(nlplist);
+	console.log(hotelIds.join());
+	
+	 Date.prototype.yyyymmdd = function() {
+	   var yyyy = this.getFullYear().toString();
+	   var mm = (this.getMonth()+1).toString(); // getMonth() is zero-based
+	   var dd  = this.getDate().toString();
+	   return yyyy + "-" + (mm[1]?mm:"0"+mm[0]) + "-" + (dd[1]?dd:"0"+dd[0]); // padding
+	  };
+
+	d = new Date();
+	d.yyyymmdd();
+	
+
+var today = new Date();
+var nextday = new Date(today);
+nextday.setDate(today.getDate() + 1);
+
+var joinResult = "http://terminal2.expedia.com/hotels?" + "hotelids=" + hotelIds.join() + "&checkInDate=" + today.yyyymmdd() + "&checkOutDate=" +nextday.yyyymmdd()+ "&apikey=Rbc5P7hu4X96LXpe1n1vAnsP4Y7ENq8I";
+
+$.get(joinResult, function(hotelresult){
+	console.log("hotelresult", hotelresult);
+
+	var hotellist = hotelresult.HotelInfoList;
+	var hotelinfo = hotellist.HotelInfo;
+
+console.log("hotelinfo", hotelinfo);
+	
+	var hotels = [];
+	$(hotelinfo).each (function(index){
+		var aHotel = hotelinfo[index];
+		if(aHotel.Price) {
+		var hotel = {
+			name: aHotel.Name,
+			latitude: aHotel.Location.GeoLocation.Latitude,
+			longitude: aHotel.Location.GeoLocation.Longitude,
+			totalprice: aHotel.Price.TotalRate.Value,
+			hotelicon: aHotel.ThumbnailUrl
+			
+		};
+		hotels.push(hotel);
+	};
+
 	});
-}).get (function (data) {
-	this.map (function (item) {
-		console.log('gun', item)
-	});
-})
+
+	console.log("hotels", hotels);
+});
+});
+
