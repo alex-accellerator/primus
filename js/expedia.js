@@ -13,7 +13,7 @@ var searchString = primusSearch;
 
 $.get("http://terminal2.expedia.com/nlp/results?q=" + encodeURI(searchString) + "&apikey=Rbc5P7hu4X96LXpe1n1vAnsP4Y7ENq8I", function(nlplist){
 
-console.log(nlplist);
+// console.log(nlplist);
 
 var hotels = nlplist.result.hotels;
 
@@ -23,8 +23,8 @@ $(hotels).each (function(index){
     hotelIds.push(aHotel.id);
 
 });
-//console.log(nlplist);
-	console.log(hotelIds.join());
+//// console.log(nlplist);
+	// console.log(hotelIds.join());
 	
 	 Date.prototype.yyyymmdd = function() {
 	   var yyyy = this.getFullYear().toString();
@@ -44,12 +44,12 @@ nextday.setDate(today.getDate() + 1);
 var joinResult = "http://terminal2.expedia.com/hotels?" + "hotelids=" + hotelIds.join() + "&checkInDate=" + today.yyyymmdd() + "&checkOutDate=" +nextday.yyyymmdd()+ "&apikey=Rbc5P7hu4X96LXpe1n1vAnsP4Y7ENq8I";
 
 $.get(joinResult, function(hotelresult){
-	console.log("hotelresult", hotelresult);
+	// console.log("hotelresult", hotelresult);
 
 	var hotellist = hotelresult.HotelInfoList;
 	var hotelinfo = hotellist.HotelInfo;
 
-console.log("hotelinfo", hotelinfo);
+// console.log("hotelinfo", hotelinfo);
 	
 	var hotels = [];
 	$(hotelinfo).each (function(index){
@@ -66,18 +66,18 @@ console.log("hotelinfo", hotelinfo);
 		};
 		gun.load('primus/hotels/' + hotel.hotelid).blank(function(){
 			this.set(hotel).key('primus/hotels/' + hotel.hotelid);
-			console.log("saving", hotel, "to gun");
+			// console.log("saving", hotel, "to gun");
 		}).get(function(point){
-			console.log("hotel ID now exists");
+			// console.log("hotel ID now exists");
 			mapPoint(point);
 		});
-		console.log(hotel);
+		// console.log(hotel);
 		hotels.push(hotel);
 	};
 
 	});
 
-	console.log("hotels", hotels);
+	// console.log("hotels", hotels);
 });
 });
 
