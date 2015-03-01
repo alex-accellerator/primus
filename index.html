@@ -29,6 +29,7 @@
 
 	  <!-- Load Esri Leaflet from CDN -->
 	  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.5/esri-leaflet.js"></script>
+	<script src="js/map.js"></script>
 
 	  <style>
 	    body {margin:0;padding:0;}
@@ -55,23 +56,26 @@
               
                     <tr><td><h2></h2></td></tr>
             <tr>
-   				<td><form method="get" action="#"  id="search" >
+   				<td><form method="get" action="#"  id="search">
 	           
-                <input type="text" name="primusSearch" id="primusSearch" onkeypress="handle(event)" placeholder="What are you looking for in a hotel?" />
+                <input type="text" name="primusSearch" id="primusSearch" placeholder="What are you looking for in a hotel?" /><input type="submit" style="display: none;">
                <script>
-               //var result=document.getElementByID("primusSearch").value;
-          function handle(e)
-             {
-	        if(e.keyCode==13)
-	           {
-		//alert("hello");
-	            expediaSearch(document.getElementById("primusSearch").value);
-//	        	window.location.replace="/map.html";
-	$(location).attr('href','/map.html');
-	
+               //var result=document.getElementById("primusSearch").value;
+             $("#search").on("submit", function(event){
+				event.preventDefault();
+				var query = document.getElementById('primusSearch').value;
+				expediaSearch(query);
+				$('body').load('./map.html');
+			});
+				//window.location.href="http://localhost:8000/map.html";
+	            //expediaSearch(document.getElementById("primusSearch").value);
+			//alert("hello");
+        	
+//	$(location).attr('href','/map.html');
+
+//				window.location="/map.html";
    
-}
-             }
+			
 			    // primusSearch.addEventListener('change', function(){
 			    // 			    expediaSearch(primusSearch.value);
 			    // 				var map = L.map('map').setView([37.75, -122.23], 10);
@@ -81,8 +85,6 @@
 			  
 			
 			</script>
-                 
-				
                 </form></td>
                     </tr>
                      <tr><td><h2></h2></td></tr>
@@ -91,9 +93,10 @@
 			</header>
 
 		</section>	
-<!--	<div id="map"></div> -->
-
-
+<!--	<div id="map"></div> 
+		<iframe src="./map.html" style="height: 100%; width: 100%; position: absolute; background: blue; display: block;"> BOOGA BOOGA</iframe>
+		-->
+		
 	</body>
 </html>
 

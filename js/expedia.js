@@ -56,6 +56,7 @@ console.log("hotelinfo", hotelinfo);
 		var aHotel = hotelinfo[index];
 		if(aHotel.Price) {
 		var hotel = {
+			hotelid: aHotel.HotelID,
 			name: aHotel.Name,
 			latitude: aHotel.Location.GeoLocation.Latitude,
 			longitude: aHotel.Location.GeoLocation.Longitude,
@@ -63,6 +64,14 @@ console.log("hotelinfo", hotelinfo);
 			hotelicon: aHotel.ThumbnailUrl
 			
 		};
+		gun.load('primus/hotels/' + hotel.hotelid).blank(function(){
+			this.set(hotel).key('primus/hotels/' + hotel.hotelid);
+			console.log("saving", hotel, "to gun");
+		}).get(function(point){
+			console.log("hotel ID now exists");
+			mapPoint(point);
+		});
+		console.log(hotel);
 		hotels.push(hotel);
 	};
 
