@@ -59,7 +59,7 @@
    				<td><form method="get" action="#"  id="search">
 	           
                 <input type="text" name="primusSearch" id="primusSearch" placeholder="What are you looking for in a hotel?" /><input type="submit" style="display: none;">
-               <script>
+	<script>
                //var result=document.getElementById("primusSearch").value;
              $("#search").on("submit", function(event){
 				event.preventDefault();
@@ -67,24 +67,8 @@
 				expediaSearch(query);
 				$('body').load('./map.html');
 			});
-				//window.location.href="http://localhost:8000/map.html";
-	            //expediaSearch(document.getElementById("primusSearch").value);
-			//alert("hello");
-        	
-//	$(location).attr('href','/map.html');
 
-//				window.location="/map.html";
-   
-			
-			    // primusSearch.addEventListener('change', function(){
-			    // 			    expediaSearch(primusSearch.value);
-			    // 				var map = L.map('map').setView([37.75, -122.23], 10);
-			    // 				  console.log(L, L.esri);
-			    // 				  L.esri.basemapLayer('Topographic').addTo(map);
-			    // 			  });
-			  
-			
-			</script>
+	</script>
                 </form></td>
                     </tr>
                      <tr><td><h2></h2></td></tr>
