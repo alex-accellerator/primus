@@ -8,7 +8,6 @@ var expedia = gun.load('primus/expedia');
 // 	})
 // }
 
-
 function mapPoint(point){
 	// if already exist then skip
 	// else put on map
@@ -21,7 +20,7 @@ function mapPoint(point){
 	var mapIcon = 
 	L.icon({
 	 iconUrl: 'images/Map-marker.png',
-	 shadowUrl: '',
+	 shadowUrl: 'images/Map-marker.png',
 	
 	 iconSize: [38, 95], // size of the icon
 	 shadowSize: [50, 64], // size of the shadow
@@ -29,32 +28,17 @@ function mapPoint(point){
 	 shadowAnchor: [4, 62], // the same for the shadow
 	 popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
 	});
-	
-	// L.Map = L.Map.extend({
-	//     openPopup: function(popup) {
-	//         //        this.closePopup();  // just comment this
-	//         this._popup = popup;
-	// 
-	//         return this.addLayer(popup).fire('popupopen', {
-	//             popup: this._popup
-	//         });
-	//     }
-	// });
-	
 	var results = new L.LayerGroup().addTo(map);
-	  map.setView(location, 15);
+	  map.setView(location, 18);
 	
 		//console.log(point.hotelURL);
 	
 	
-	results.addLayer(L.marker(location, {icon: mapIcon})
-
-	.on('click', function(e) {
+	results.addLayer(L.marker(location).on('click', function(e) {
 
 window.open(point.hotelURL,"_blank");
 	// window.location.href = point.hotelURL;
-	})
-
-	);
+	}));
+		L.marker(location).bindPopup("Hello world!.").openPopup();
 		
 }
