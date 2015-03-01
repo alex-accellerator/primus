@@ -69,7 +69,9 @@ console.log("hotelinfo", hotelinfo);
 			lat: aHotel.Location.GeoLocation.Latitude,
 			lng: aHotel.Location.GeoLocation.Longitude,
 			totalprice: aHotel.Price.TotalRate.Value,
-			hotelicon: aHotel.ThumbnailUrl
+			hotelicon: aHotel.ThumbnailUrl,
+			hotelURL: aHotel.DetailsUrl,
+			hotelRating: aHotel.StarRating
 			
 		};
 		gun.load('primus/hotels/' + hotel.hotelid).blank(function(){
