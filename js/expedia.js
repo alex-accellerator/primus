@@ -1,11 +1,19 @@
 // var gun = Gun('http://gunjs.herokuapp.com/gun'); //, location.origin + '/gun']);
+
+function expediaSearch(primusSearch)
+{
+	
 var gun = Gun(location.origin + '/gun');
 var expedia = gun.load('primus/expedia');
 
 var hotelIds = [];
 
-var searchString = "My wife and I want the cheapest hotel in San Francisco for this weekend";
+var searchString = primusSearch;
+
+
 $.get("http://terminal2.expedia.com/nlp/results?q=" + encodeURI(searchString) + "&apikey=Rbc5P7hu4X96LXpe1n1vAnsP4Y7ENq8I", function(nlplist){
+
+console.log(nlplist);
 
 var hotels = nlplist.result.hotels;
 
@@ -64,3 +72,4 @@ console.log("hotelinfo", hotelinfo);
 });
 });
 
+}
