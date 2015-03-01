@@ -23,7 +23,7 @@
 		<script src="js/jquery.scrollex.min.js"></script>
 		<!--<script src="js/jquery.scrolly.min.js"></script>-->
 		<script src="js/skel.min.js"></script>
-		<script src="js/init.js"></script>
+//		<script src="js/init.js"></script>
 		<link rel="stylesheet" href="http://cdn.jsdelivr.net/leaflet/0.7.3/leaflet.css" />
 	  <script src="http://cdn.jsdelivr.net/leaflet/0.7.3/leaflet.js"></script>
 
@@ -66,8 +66,11 @@
 	           {
 		//alert("hello");
 	            expediaSearch(document.getElementById("primusSearch").value);
-	        	window.location.href="://map.html";
-            	}
+//	        	window.location.replace="/map.html";
+	$(location).attr('href','/map.html');
+	
+   
+}
              }
 			    // primusSearch.addEventListener('change', function(){
 			    // 			    expediaSearch(primusSearch.value);
