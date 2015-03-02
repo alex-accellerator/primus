@@ -41,20 +41,29 @@ function mapPoint(point){
 	//     }
 	// });
 	
-	var results = new L.LayerGroup().addTo(map);
+	// var results = new L.LayerGroup().addTo(map);
 	  map.setView(location, 15);
 	
 		//console.log(point.hotelURL);
 	
+
+	// results.addLayer(L.marker(location, {icon: mapIcon})
+	// 
+	// 	.on('click', function(e) {
+	// 
+	// window.open(point.hotelURL,"_blank");
+	// 	// window.location.href = point.hotelURL;
+	// 	})
+	// 
+	// 	);
 	
-	results.addLayer(L.marker(location, {icon: mapIcon})
-
-	.on('click', function(e) {
-
-window.open(point.hotelURL,"_blank");
-	// window.location.href = point.hotelURL;
-	})
-
-	);
-		
+	 map.on('click', onMapClick);
+	function onMapClick(e) {
+	        var marker = new L.Marker(location, {icon: mapIcon}, {draggable:true});
+	        map.addLayer(marker);
+	        marker.bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();
+	window.open(point.hotelURL,"_blank");
+	};
+	
+	
 }
